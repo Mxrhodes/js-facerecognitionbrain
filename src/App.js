@@ -20,7 +20,11 @@ const App = () => {
 
   const calculateFaceLocation = (responseData) => {
     const { bottom_row, left_col, right_col, top_row } = responseData;
-
+    console.log('br: ', bottom_row)
+    console.log('lc: ', left_col)
+    console.log('rc: ', right_col)
+    console.log('tr: ', top_row)
+    
     const image = document.getElementById('image-input');
     const width = Number(image.width)
     const height = Number(image.height);
@@ -39,7 +43,6 @@ const App = () => {
   }
 
   const onInputChange = (event) => {
-    console.log('event', event.target.value)
     setInputState(event.target.value);
   }
 
@@ -76,12 +79,10 @@ const App = () => {
     //.then(result => console.log(result.outputs[0].data.regions))
     .then(result => displayFaceBox(calculateFaceLocation(result.outputs[0].data.regions[0].region_info.bounding_box)))
     .catch(error => console.log('--ERROR--', error));
-    console.log("--SUBMITTED--")
 
   }
 
   const particlesInit = useCallback(async engine => {
-    console.log(engine);
     // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
     // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
     // starting from v2 you can add only the features you need reducing the bundle size
@@ -155,6 +156,7 @@ const particlesLoaded = useCallback(async container => {
         onSubmitButton={onSubmitButton}
       />
       <FaceRecognition 
+        box={box}
         imageUrl={imageUrl}/>
     </div>
   );
